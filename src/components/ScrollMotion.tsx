@@ -42,7 +42,7 @@ export function ScrollMotion() {
       });
       gsap.from(words, { yPercent: 40, opacity: 0, duration: 0.6, ease: "power3.out", stagger: 0.08 });
 
-      gsap.utils.toArray<HTMLElement>(".section-title, .feature-title").forEach((el) => {
+      gsap.utils.toArray<HTMLElement>(".section-title, .feature-title, .sizes-guide h3").forEach((el) => {
         gsap.from(el, {
           yPercent: 60,
           opacity: 0,

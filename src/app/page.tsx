@@ -4,6 +4,7 @@ import { CountdownSection } from "@/components/CountdownSection";
 import { Features } from "@/components/Features";
 import { Hero } from "@/components/Hero";
 import { Marquee } from "@/components/Marquee";
+import { SizeGuide } from "@/components/SizeGuide";
 import { ScrollMotion } from "@/components/ScrollMotion";
 import { NotifyForm } from "@/components/NotifyForm";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -22,6 +23,7 @@ export default function Home() {
         <Hero />
         <Marquee />
         <Features />
+        <SizeGuide />
         <Colorways />
         <CountdownSection />
         <NotifyForm />
