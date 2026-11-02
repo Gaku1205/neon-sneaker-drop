@@ -18,6 +18,17 @@
 
 （ページごとに、何を出して何ができるか）
 
+### 色違いと URL（発売ページ全体）
+
+- 選んだ色違いは URL のクエリ `color` に残す。値は `src/lib/colorways.ts` の `id`（`acid` / `shock` / `volt`）。例：`/?color=shock`。こうすると、リンクをそのまま人に送れば同じ色違いから始まる。
+- 色違いを選ぶと、アドレスバーの URL の `color` が書き換わる（`window.history.replaceState`）。履歴は増やさず、遷移・スクロール・再読み込みはしない。
+- 最初の色（`acid`）のときは `color` を付けない（`?color=acid` は付けず、`color` を消す）。
+- ページを開いたとき：`color` が無い・空・知らない値（例：`?color=xxx`、`?color=`）は、エラーにせず最初の色（`acid`）で始める。大文字小文字は区別しない（`?color=SHOCK` は `shock`）。
+- 他のクエリ（例：`?utm_source=ig&color=shock` の `utm_source`）とハッシュ（例：`#notify`）は、色を切り替えても消さない。
+- 初回の描画は、URL を読む前の `acid`（番号 0）で出す。マウント後に URL を読んで色を合わせるので、`?color=shock` で開くと一瞬だけ最初の黄緑が見えることがある。
+- ブラウザの「戻る／進む」で `color` が変わっても、画面の色は追わない。
+- 判定は `src/lib/colorways.ts` の `colorwayIndexFromParam`（`color` の値 → 番号、不正は 0）と `searchWithColorway`（番号と今の検索文字列 → 新しい検索文字列）。
+
 ### サイズ区画（見どころの下・色違いの上、`src/components/SizeGuide.tsx`）
 
 - 出すもの：巨大な欧文「SIZE」、HUD「SIZE GUIDE — 22.0–30.0 CM」、見出し「サイズを、測れ。」（h2）、サイズ表、足の幅の合わせ方の案内3項目。靴の置き場（`data-shoe-slot`）は置かない。
