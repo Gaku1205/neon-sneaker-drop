@@ -64,3 +64,27 @@ export function colorwayAt(index: number): Colorway {
   const n = COLORWAYS.length;
   return COLORWAYS[((Math.floor(index) % n) + n) % n];
 }
+
+/** 色違いを URL に残すときのクエリ名（例：`?color=shock`） */
+export const COLORWAY_QUERY = "color";
+
+/** `color` の値 → 色違いの番号。null・空・知らない値は 0（最初の色）。大文字小文字は区別しない。 */
+export function colorwayIndexFromParam(value: string | null): number {
+  if (value === null) return 0;
+  const id = value.toLowerCase();
+  const i = COLORWAYS.findIndex((c) => c.id === id);
+  return i < 0 ? 0 : i;
+}
+
+/**
+ * 色違いの番号と今の検索文字列 → 新しい検索文字列（"?..." または ""）。
+ * 最初の色は `color` を消す。他のクエリは残す。
+ */
+export function searchWithColorway(index: number, search: string): string {
+  const params = new URLSearchParams(search);
+  const c = colorwayAt(index);
+  if (c.id === COLORWAYS[0].id) params.delete(COLORWAY_QUERY);
+  else params.set(COLORWAY_QUERY, c.id);
+  const s = params.toString();
+  return s ? `?${s}` : "";
+}
