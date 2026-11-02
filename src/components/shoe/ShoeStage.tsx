@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { useColorway } from "@/components/ColorwayProvider";
-import type { Colorway } from "@/lib/colorways";
+import { shoeLabel, type Colorway } from "@/lib/colorways";
 import { stageTarget, type Slot } from "@/lib/shoePose";
 import { buildShoe, createShoeMaterials, type ShoeMaterials } from "./buildShoe";
+import { ShoeSideSvg } from "./ShoeSideSvg";
 
 const SHOE_LENGTH = 4.5;
 const FOV = 35;
@@ -78,6 +80,8 @@ export function ShoeStage() {
   const colorRef = useRef<Colorway>(colorway);
   const bumpRef = useRef(0);
   const wakeRef = useRef<(() => void) | null>(null);
+  // WebGL が作れなかったときだけ、置き場に平面の SVG を出す
+  const [fallbackSlots, setFallbackSlots] = useState<HTMLElement[]>([]);
 
   useEffect(() => {
     colorRef.current = colorway;
@@ -96,6 +100,8 @@ export function ShoeStage() {
       renderer = new THREE.WebGLRenderer({ antialias: !small, alpha: true, powerPreference: "high-performance" });
     } catch {
       el.dataset.failed = "true";
+      const slots = Array.from(document.querySelectorAll<HTMLElement>("[data-shoe-slot]"));
+      queueMicrotask(() => setFallbackSlots(slots));
       return;
     }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, small ? 1.5 : 1.75));
@@ -337,5 +343,12 @@ export function ShoeStage() {
     };
   }, []);
 
-  return <div ref={holder} className="stage" aria-hidden="true" />;
+  return (
+    <>
+      <div ref={holder} className="stage" aria-hidden="true" />
+      {fallbackSlots.map((slot) =>
+        createPortal(<ShoeSideSvg colors={colorway.shoe} label={shoeLabel(colorway)} />, slot, slot.dataset.shoeSlot),
+      )}
+    </>
+  );
 }

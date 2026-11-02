@@ -55,6 +55,11 @@ export const COLORWAYS: readonly Colorway[] = [
   },
 ] as const;
 
+/** 靴の代替画像の説明：商品名＋色名（例：PULSAR-9 ACID LIME） */
+export function shoeLabel(c: Colorway): string {
+  return `PULSAR-9 ${c.name}`;
+}
+
 export function colorwayAt(index: number): Colorway {
   const n = COLORWAYS.length;
   return COLORWAYS[((Math.floor(index) % n) + n) % n];

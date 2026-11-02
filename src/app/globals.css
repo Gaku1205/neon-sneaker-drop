@@ -97,6 +97,8 @@ a { color: inherit; }
 }
 .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .slot { pointer-events: none; }
+/* WebGL が使えないときの靴の SVG：置き場の中に収める */
+.shoe-fallback { display: block; width: 90%; height: 90%; margin: 5% auto; }
 
 /* ========== ボタン ========== */
 .btn {

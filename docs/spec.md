@@ -27,6 +27,12 @@
 - 挙動：入力・選択・在庫・購入の機能はない（読むだけ）。「SIZE」は他の巨大な単語と同じくスクロールで流れ、見出しと案内の小見出しは下から出る。`prefers-reduced-motion` では止まる。
 - 色違いの選択で色が変わるのは「SIZE」と表の左列、HUD、案内の番号（差し色の文字）だけ。
 
+## WebGL が使えないとき
+
+- `new THREE.WebGLRenderer` が例外を投げたときだけ、各 `[data-shoe-slot]` の中に靴の側面の SVG を出す。WebGL が使えるときは 3D だけで、SVG は出ない。
+- SVG は選んだ色違い（`useColorway`）の `shoe` の色になり、色違いのボタンで切り替わる。置き場の大きさに収まる（`data-rx` `data-ry` `data-rz` `data-spin` は無視する）。動かさない。
+- `role="img"`、`aria-label` は商品名＋色名（例：「PULSAR-9 ACID LIME」）。
+
 ## あとで（今は入れない）
 
 -
