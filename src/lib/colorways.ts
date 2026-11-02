@@ -1,0 +1,61 @@
+export type Colorway = {
+  id: "acid" | "shock" | "volt";
+  /** 色の名前（欧文・大きく出す） */
+  name: string;
+  /** 色の名前（日本語） */
+  nameJa: string;
+  /** 一言 */
+  note: string;
+  /** 画面の差し色：塗り */
+  accent: string;
+  /** 差し色の塗りの上に置く文字の色 */
+  accentInk: string;
+  /** 黒地の上に置く差し色の文字（4.5:1 以上） */
+  accentText: string;
+  /** 靴の色 */
+  shoe: {
+    upper: string;
+    midsole: string;
+    outsole: string;
+    trim: string;
+    glow: string;
+  };
+};
+
+export const COLORWAYS: readonly Colorway[] = [
+  {
+    id: "acid",
+    name: "ACID LIME",
+    nameJa: "アシッド・ライム",
+    note: "夜道でいちばん目立つ、最初の1色。",
+    accent: "#C8FF00",
+    accentInk: "#0A0A0B",
+    accentText: "#C8FF00",
+    shoe: { upper: "#C8FF00", midsole: "#F4F4EE", outsole: "#141416", trim: "#FF2E9A", glow: "#FF2E9A" },
+  },
+  {
+    id: "shock",
+    name: "SHOCK PINK",
+    nameJa: "ショック・ピンク",
+    note: "黄緑のソールとぶつけた、いちばんうるさい1足。",
+    accent: "#FF2E9A",
+    accentInk: "#0A0A0B",
+    accentText: "#FF2E9A",
+    shoe: { upper: "#FF2E9A", midsole: "#C8FF00", outsole: "#141416", trim: "#0A0A0B", glow: "#C8FF00" },
+  },
+  {
+    id: "volt",
+    name: "VOLT BLUE",
+    nameJa: "ボルト・ブルー",
+    note: "電気の青に、信号のオレンジを差した1足。",
+    accent: "#2B3BFF",
+    accentInk: "#F4F4EE",
+    accentText: "#9AA3FF",
+    shoe: { upper: "#2B3BFF", midsole: "#FF5A1F", outsole: "#141416", trim: "#F4F4EE", glow: "#FF5A1F" },
+  },
+] as const;
+
+export function colorwayAt(index: number): Colorway {
+  const n = COLORWAYS.length;
+  return COLORWAYS[((Math.floor(index) % n) + n) % n];
+}

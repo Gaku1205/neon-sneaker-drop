@@ -1,10 +1,33 @@
-import { greeting } from "@/lib/greeting";
+import { ColorwayProvider } from "@/components/ColorwayProvider";
+import { Colorways } from "@/components/Colorways";
+import { CountdownSection } from "@/components/CountdownSection";
+import { Features } from "@/components/Features";
+import { Hero } from "@/components/Hero";
+import { Marquee } from "@/components/Marquee";
+import { ScrollMotion } from "@/components/ScrollMotion";
+import { NotifyForm } from "@/components/NotifyForm";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
+import { ShoeStage } from "@/components/shoe/ShoeStage";
 
 export default function Home() {
   return (
-    <main className="container">
-      <h1>{greeting("世界")}</h1>
-      <p>このアプリは ai-dev-template から作られました。docs/spec.md に仕様を書いて始めます。</p>
-    </main>
+    <ColorwayProvider>
+      <a className="skip" href="#notify">
+        通知の登録へ飛ぶ
+      </a>
+      <SiteHeader />
+      <ShoeStage />
+      <main id="top">
+        <Hero />
+        <Marquee />
+        <Features />
+        <Colorways />
+        <CountdownSection />
+        <NotifyForm />
+      </main>
+      <SiteFooter />
+      <ScrollMotion />
+    </ColorwayProvider>
   );
 }
